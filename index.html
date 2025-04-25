@@ -1,1 +1,169 @@
-<h1> why can't print?</h1>
+<h1> Welcome</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>多模型AI搜索界面</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --gemini-color: #ea8600;
+            --deepseek-color: #10b981;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .model-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .model-btn.active {
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #openai-btn { background: var(--primary-color); }
+        #gemini-btn { background: var(--gemini-color); }
+        #deepseek-btn { background: var(--deepseek-color); }
+
+        /* 其他样式保持与之前示例一致 */
+        /* 加载动画和搜索结果框也保持原样 */
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="selector">
+            <button class="model-btn active" id="openai-btn" data-model="openai">OpenAI</button>
+            <button class="model-btn" id="gemini-btn" data-model="gemini">Gemini</button>
+            <button class="model-btn" id="deepseek-btn" data-model="deepseek">DeepSeek</button>
+        </div>
+        <input type="text" id="search-input" placeholder="输入您的问题...">
+        <div class="loader" id="loader"></div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // 配置不同模型的API信息 (实际应在后端配置)
+        const API_CONFIG = {
+            openai: {
+                endpoint: "https://api.openai.com/v1/chat/completions",
+                key: "sk-your-openai-key",
+                model: "gpt-3.5-turbo"
+            },
+            gemini: {
+                endpoint: "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+                key: "your-gemini-key",
+                model: "gemini-pro"
+            },
+            deepseek: {
+                endpoint: "https://api.deepseek.com/v1/chat/completions",
+                key: "sk-your-deepseek-key",
+                model: "deepseek-chat"
+            }
+        };
+
+        let currentModel = 'openai';
+        const modelButtons = document.querySelectorAll('.model-btn');
+        
+        // 模型切换逻辑
+        modelButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modelButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentModel = btn.dataset.model;
+            });
+        });
+
+        async function handleSearch(query) {
+            // ...省略加载状态等通用逻辑...
+            
+            try {
+                let result;
+                switch(currentModel) {
+                    case 'openai':
+                        result = await callOpenAI(query);
+                        break;
+                    case 'gemini':
+                        result = await callGemini(query);
+                        break;
+                    case 'deepseek':
+                        result = await callDeepSeek(query);
+                        break;
+                }
+                output.innerHTML = result;
+            } catch(error) {
+                // 统一错误处理
+                output.textContent = `错误：${error.message}`;
+            }
+        }
+
+        // OpenAI调用适配器
+        async function callOpenAI(query) {
+            const response = await fetch(API_CONFIG.openai.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_CONFIG.openai.key}`
+                },
+                body: JSON.stringify({
+                    model: API_CONFIG.openai.model,
+                    messages: [{role: "user", content: query}]
+                })
+            });
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        // Gemini调用适配器
+        async function callGemini(query) {
+            const url = `${API_CONFIG.gemini.endpoint}?key=${API_CONFIG.gemini.key}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{text: query}]
+                    }]
+                })
+            });
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        }
+
+        // DeepSeek调用适配器
+        async function callDeepSeek(query) {
+            const response = await fetch(API_CONFIG.deepseek.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_CONFIG.deepseek.key}`
+                },
+                body: JSON.stringify({
+                    model: API_CONFIG.deepseek.model,
+                    messages: [{role: "user", content: query}]
+                })
+            });
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        // 共用的事件监听器和防抖逻辑与之前示例一致
+    </script>
+</body>
+</html>
