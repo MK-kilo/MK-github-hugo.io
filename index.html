@@ -166,4 +166,123 @@
         // 共用的事件监听器和防抖逻辑与之前示例一致
     </script>
 </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>多模型AI搜索+确认按钮</title>
+    <style>
+        /* 新增搜索按钮样式 */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+
+        #search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        #search-btn {
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        #search-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* 其他保持原有样式不变 */
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="selector">
+            <button class="model-btn active" data-model="openai">OpenAI</button>
+            <button class="model-btn" data-model="gemini">Gemini</button>
+            <button class="model-btn" data-model="deepseek">DeepSeek</button>
+        </div>
+        
+        <!-- 新增搜索按钮容器 -->
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="输入您的问题..."
+                autocomplete="off"
+            >
+            <button id="search-btn" onclick="handleSearch()">搜索</button>
+        </div>
+
+        <div class="loader" id="loader"></div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // 新增防抖版搜索逻辑
+        const searchBtn = document.getElementById('search-btn');
+        let isSearching = false;
+
+        // 点击按钮触发搜索
+        async function handleSearch() {
+            if (isSearching) return;
+            
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) {
+                alert('请输入有效内容');
+                return;
+            }
+
+            isSearching = true;
+            searchBtn.disabled = true;
+            loader.style.display = 'block';
+            output.textContent = '';
+
+            try {
+                let result;
+                switch(currentModel) {
+                    case 'openai':
+                        result = await callOpenAI(query);
+                        break;
+                    case 'gemini':
+                        result = await callGemini(query);
+                        break;
+                    case 'deepseek':
+                        result = await callDeepSeek(query);
+                        break;
+                }
+                output.innerHTML = result;
+            } catch(error) {
+                output.textContent = `错误：${error.message}`;
+            } finally {
+                isSearching = false;
+                searchBtn.disabled = false;
+                loader.style.display = 'none';
+            }
+        }
+
+        // 新增回车键支持
+        document.getElementById('search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isSearching) {
+                handleSearch();
+            }
+        });
+    </script>
+</body>
+</html>
+
 </html>
