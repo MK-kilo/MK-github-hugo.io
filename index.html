@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球热门网站排名 (浅绿色版)</title>
+    <title>Top 50 Global Websites (Light Green Theme)</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0fff0; /* 浅绿色背景 */
+            background-color: #f0fff0; /* Light green background */
             color: #333;
             margin: 0;
             padding: 20px;
@@ -86,390 +86,432 @@
         .pagination button:hover {
             background-color: #66bb6a;
         }
+        .language-switcher {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .language-btn {
+            background-color: #a5d6a7;
+            border: none;
+            color: #2e7d32;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .language-btn.active {
+            background-color: #2e7d32;
+            color: white;
+        }
+        a {
+            color: #1b5e20;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>全球热门网站排名</h1>
+        <div class="language-switcher">
+            <button class="language-btn active">English</button>
+            <button class="language-btn">中文</button>
+            <button class="language-btn">العربية</button>
+        </div>
+        
+        <h1>Top 50 Global Websites</h1>
         
         <div class="header">
             <div>
-                <span>更新日期: 2025年5月</span>
+                <span>Last Updated: May 2025</span>
             </div>
-            <input type="text" class="search-box" placeholder="搜索网站...">
+            <input type="text" class="search-box" placeholder="Search websites...">
         </div>
         
         <table>
             <thead>
                 <tr>
-                    <th>排名</th>
-                    <th>网站</th>
-                    <th>类别</th>
-                    <th>月访问量</th>
-                    <th>国家/地区</th>
+                    <th>Rank</th>
+                    <th>Website</th>
+                    <th>Category</th>
+                    <th>Monthly Visits</th>
+                    <th>Country</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="rank">1</td>
-                    <td>google.com</td>
-                    <td><span class="category">搜索引擎</span></td>
+                    <td><a href="https://www.google.com" target="_blank">google.com</a></td>
+                    <td><span class="category">Search Engine</span></td>
                     <td>86.7B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">2</td>
-                    <td>youtube.com</td>
-                    <td><span class="category">视频分享</span></td>
+                    <td><a href="https://www.youtube.com" target="_blank">youtube.com</a></td>
+                    <td><span class="category">Video Sharing</span></td>
                     <td>34.6B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">3</td>
-                    <td>facebook.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.facebook.com" target="_blank">facebook.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>24.5B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">4</td>
-                    <td>twitter.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.twitter.com" target="_blank">twitter.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>21.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">5</td>
-                    <td>instagram.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.instagram.com" target="_blank">instagram.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>19.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">6</td>
-                    <td>baidu.com</td>
-                    <td><span class="category">搜索引擎</span></td>
+                    <td><a href="https://www.baidu.com" target="_blank">baidu.com</a></td>
+                    <td><span class="category">Search Engine</span></td>
                     <td>17.3B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">7</td>
-                    <td>wikipedia.org</td>
-                    <td><span class="category">百科全书</span></td>
+                    <td><a href="https://www.wikipedia.org" target="_blank">wikipedia.org</a></td>
+                    <td><span class="category">Encyclopedia</span></td>
                     <td>15.9B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">8</td>
-                    <td>yahoo.com</td>
-                    <td><span class="category">门户网站</span></td>
+                    <td><a href="https://www.yahoo.com" target="_blank">yahoo.com</a></td>
+                    <td><span class="category">Portal</span></td>
                     <td>14.7B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">9</td>
-                    <td>amazon.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.amazon.com" target="_blank">amazon.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>13.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">10</td>
-                    <td>linkedin.com</td>
-                    <td><span class="category">职业社交</span></td>
+                    <td><a href="https://www.linkedin.com" target="_blank">linkedin.com</a></td>
+                    <td><span class="category">Professional</span></td>
                     <td>12.4B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">11</td>
-                    <td>reddit.com</td>
-                    <td><span class="category">社交新闻</span></td>
+                    <td><a href="https://www.reddit.com" target="_blank">reddit.com</a></td>
+                    <td><span class="category">Social News</span></td>
                     <td>11.9B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">12</td>
-                    <td>zoom.us</td>
-                    <td><span class="category">视频会议</span></td>
+                    <td><a href="https://www.zoom.us" target="_blank">zoom.us</a></td>
+                    <td><span class="category">Video Conferencing</span></td>
                     <td>11.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">13</td>
-                    <td>qq.com</td>
-                    <td><span class="category">门户网站</span></td>
+                    <td><a href="https://www.qq.com" target="_blank">qq.com</a></td>
+                    <td><span class="category">Portal</span></td>
                     <td>10.8B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">14</td>
-                    <td>taobao.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.taobao.com" target="_blank">taobao.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>10.5B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">15</td>
-                    <td>tmall.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.tmall.com" target="_blank">tmall.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>10.3B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">16</td>
-                    <td>microsoft.com</td>
-                    <td><span class="category">科技</span></td>
+                    <td><a href="https://www.microsoft.com" target="_blank">microsoft.com</a></td>
+                    <td><span class="category">Technology</span></td>
                     <td>9.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">17</td>
-                    <td>apple.com</td>
-                    <td><span class="category">科技</span></td>
+                    <td><a href="https://www.apple.com" target="_blank">apple.com</a></td>
+                    <td><span class="category">Technology</span></td>
                     <td>9.5B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">18</td>
-                    <td>netflix.com</td>
-                    <td><span class="category">流媒体</span></td>
+                    <td><a href="https://www.netflix.com" target="_blank">netflix.com</a></td>
+                    <td><span class="category">Streaming</span></td>
                     <td>9.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">19</td>
-                    <td>office.com</td>
-                    <td><span class="category">生产力工具</span></td>
+                    <td><a href="https://www.office.com" target="_blank">office.com</a></td>
+                    <td><span class="category">Productivity</span></td>
                     <td>8.9B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">20</td>
-                    <td>bing.com</td>
-                    <td><span class="category">搜索引擎</span></td>
+                    <td><a href="https://www.bing.com" target="_blank">bing.com</a></td>
+                    <td><span class="category">Search Engine</span></td>
                     <td>8.7B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">21</td>
-                    <td>pinterest.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.pinterest.com" target="_blank">pinterest.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>8.4B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">22</td>
-                    <td>whatsapp.com</td>
-                    <td><span class="category">通讯</span></td>
+                    <td><a href="https://www.whatsapp.com" target="_blank">whatsapp.com</a></td>
+                    <td><span class="category">Messaging</span></td>
                     <td>8.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">23</td>
-                    <td>tiktok.com</td>
-                    <td><span class="category">短视频</span></td>
+                    <td><a href="https://www.tiktok.com" target="_blank">tiktok.com</a></td>
+                    <td><span class="category">Short Video</span></td>
                     <td>8.0B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">24</td>
-                    <td>jd.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.jd.com" target="_blank">jd.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>7.8B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">25</td>
-                    <td>weibo.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.weibo.com" target="_blank">weibo.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>7.6B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">26</td>
-                    <td>ebay.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.ebay.com" target="_blank">ebay.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>7.4B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">27</td>
-                    <td>twitch.tv</td>
-                    <td><span class="category">直播</span></td>
+                    <td><a href="https://www.twitch.tv" target="_blank">twitch.tv</a></td>
+                    <td><span class="category">Live Streaming</span></td>
                     <td>7.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">28</td>
-                    <td>aliexpress.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.aliexpress.com" target="_blank">aliexpress.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>7.0B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">29</td>
-                    <td>paypal.com</td>
-                    <td><span class="category">支付</span></td>
+                    <td><a href="https://www.paypal.com" target="_blank">paypal.com</a></td>
+                    <td><span class="category">Payments</span></td>
                     <td>6.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">30</td>
-                    <td>microsoftonline.com</td>
-                    <td><span class="category">生产力工具</span></td>
+                    <td><a href="https://www.microsoftonline.com" target="_blank">microsoftonline.com</a></td>
+                    <td><span class="category">Productivity</span></td>
                     <td>6.6B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">31</td>
-                    <td>sohu.com</td>
-                    <td><span class="category">门户网站</span></td>
+                    <td><a href="https://www.sohu.com" target="_blank">sohu.com</a></td>
+                    <td><span class="category">Portal</span></td>
                     <td>6.4B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">32</td>
-                    <td>dropbox.com</td>
-                    <td><span class="category">云存储</span></td>
+                    <td><a href="https://www.dropbox.com" target="_blank">dropbox.com</a></td>
+                    <td><span class="category">Cloud Storage</span></td>
                     <td>6.2B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">33</td>
-                    <td>sina.com.cn</td>
-                    <td><span class="category">门户网站</span></td>
+                    <td><a href="https://www.sina.com.cn" target="_blank">sina.com.cn</a></td>
+                    <td><span class="category">Portal</span></td>
                     <td>6.0B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">34</td>
-                    <td>vk.com</td>
-                    <td><span class="category">社交网络</span></td>
+                    <td><a href="https://www.vk.com" target="_blank">vk.com</a></td>
+                    <td><span class="category">Social Network</span></td>
                     <td>5.8B</td>
-                    <td>俄罗斯</td>
+                    <td>Russia</td>
                 </tr>
                 <tr>
                     <td class="rank">35</td>
-                    <td>spotify.com</td>
-                    <td><span class="category">音乐流媒体</span></td>
+                    <td><a href="https://www.spotify.com" target="_blank">spotify.com</a></td>
+                    <td><span class="category">Music Streaming</span></td>
                     <td>5.6B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">36</td>
-                    <td>naver.com</td>
-                    <td><span class="category">门户网站</span></td>
+                    <td><a href="https://www.naver.com" target="_blank">naver.com</a></td>
+                    <td><span class="category">Portal</span></td>
                     <td>5.4B</td>
-                    <td>韩国</td>
+                    <td>South Korea</td>
                 </tr>
                 <tr>
                     <td class="rank">37</td>
-                    <td>csdn.net</td>
-                    <td><span class="category">技术社区</span></td>
+                    <td><a href="https://www.csdn.net" target="_blank">csdn.net</a></td>
+                    <td><span class="category">Tech Community</span></td>
                     <td>5.2B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">38</td>
-                    <td>stackoverflow.com</td>
-                    <td><span class="category">技术问答</span></td>
+                    <td><a href="https://www.stackoverflow.com" target="_blank">stackoverflow.com</a></td>
+                    <td><span class="category">Tech Q&A</span></td>
                     <td>5.0B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">39</td>
-                    <td>github.com</td>
-                    <td><span class="category">代码托管</span></td>
+                    <td><a href="https://www.github.com" target="_blank">github.com</a></td>
+                    <td><span class="category">Code Hosting</span></td>
                     <td>4.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">40</td>
-                    <td>adobe.com</td>
-                    <td><span class="category">软件</span></td>
+                    <td><a href="https://www.adobe.com" target="_blank">adobe.com</a></td>
+                    <td><span class="category">Software</span></td>
                     <td>4.6B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">41</td>
-                    <td>zhihu.com</td>
-                    <td><span class="category">问答社区</span></td>
+                    <td><a href="https://www.zhihu.com" target="_blank">zhihu.com</a></td>
+                    <td><span class="category">Q&A Community</span></td>
                     <td>4.4B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">42</td>
-                    <td>alipay.com</td>
-                    <td><span class="category">支付</span></td>
+                    <td><a href="https://www.alipay.com" target="_blank">alipay.com</a></td>
+                    <td><span class="category">Payments</span></td>
                     <td>4.2B</td>
-                    <td>中国</td>
+                    <td>China</td>
                 </tr>
                 <tr>
                     <td class="rank">43</td>
-                    <td>quora.com</td>
-                    <td><span class="category">问答社区</span></td>
+                    <td><a href="https://www.quora.com" target="_blank">quora.com</a></td>
+                    <td><span class="category">Q&A Community</span></td>
                     <td>4.0B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">44</td>
-                    <td>medium.com</td>
-                    <td><span class="category">博客平台</span></td>
+                    <td><a href="https://www.medium.com" target="_blank">medium.com</a></td>
+                    <td><span class="category">Blogging</span></td>
                     <td>3.8B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">45</td>
-                    <td>imdb.com</td>
-                    <td><span class="category">电影数据库</span></td>
+                    <td><a href="https://www.imdb.com" target="_blank">imdb.com</a></td>
+                    <td><span class="category">Movies</span></td>
                     <td>3.6B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">46</td>
-                    <td>wordpress.com</td>
-                    <td><span class="category">博客平台</span></td>
+                    <td><a href="https://www.wordpress.com" target="_blank">wordpress.com</a></td>
+                    <td><span class="category">Blogging</span></td>
                     <td>3.4B</td>
-                    <td>全球</td>
+                    <td>Global</td>
                 </tr>
                 <tr>
                     <td class="rank">47</td>
-                    <td>cnn.com</td>
-                    <td><span class="category">新闻</span></td>
+                    <td><a href="https://www.cnn.com" target="_blank">cnn.com</a></td>
+                    <td><span class="category">News</span></td>
                     <td>3.2B</td>
-                    <td>美国</td>
+                    <td>USA</td>
                 </tr>
                 <tr>
                     <td class="rank">48</td>
-                    <td>bbc.com</td>
-                    <td><span class="category">新闻</span></td>
+                    <td><a href="https://www.bbc.com" target="_blank">bbc.com</a></td>
+                    <td><span class="category">News</span></td>
                     <td>3.0B</td>
-                    <td>英国</td>
+                    <td>UK</td>
                 </tr>
                 <tr>
                     <td class="rank">49</td>
-                    <td>nytimes.com</td>
-                    <td><span class="category">新闻</span></td>
+                    <td><a href="https://www.nytimes.com" target="_blank">nytimes.com</a></td>
+                    <td><span class="category">News</span></td>
                     <td>2.8B</td>
-                    <td>美国</td>
+                    <td>USA</td>
                 </tr>
                 <tr>
                     <td class="rank">50</td>
-                    <td>walmart.com</td>
-                    <td><span class="category">电子商务</span></td>
+                    <td><a href="https://www.walmart.com" target="_blank">walmart.com</a></td>
+                    <td><span class="category">E-commerce</span></td>
                     <td>2.6B</td>
-                    <td>美国</td>
+                    <td>USA</td>
                 </tr>
             </tbody>
         </table>
         
         <div class="pagination">
-            <button>上一页</button>
+            <button>Previous</button>
             <button>1</button>
             <button>2</button>
             <button>3</button>
-            <button>下一页</button>
+            <button>Next</button>
         </div>
     </div>
+
+    <script>
+        // Simple language switcher functionality
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // In a real implementation, this would change the page language
+                alert('Language switched to: ' + this.textContent);
+            });
+        });
+    </script>
 </body>
 </html>
