@@ -1,288 +1,475 @@
-<h1> Welcome</h1>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>多模型AI搜索界面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球热门网站排名 (浅绿色版)</title>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --gemini-color: #ea8600;
-            --deepseek-color: #10b981;
-        }
-
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            max-width: 800px;
-            margin: 2rem auto;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0fff0; /* 浅绿色背景 */
+            color: #333;
+            margin: 0;
             padding: 20px;
-            background: #f8fafc;
         }
-
-        .selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .model-btn {
-            padding: 8px 16px;
-            border: none;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #e8f5e9;
+            padding: 20px;
             border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+            box-shadow: 0 2px 10px rgba(0, 100, 0, 0.1);
         }
-
-        .model-btn.active {
-            color: white;
-            transform: scale(1.05);
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            border-bottom: 2px solid #a5d6a7;
+            padding-bottom: 10px;
         }
-
-        #openai-btn { background: var(--primary-color); }
-        #gemini-btn { background: var(--gemini-color); }
-        #deepseek-btn { background: var(--deepseek-color); }
-
-        /* 其他样式保持与之前示例一致 */
-        /* 加载动画和搜索结果框也保持原样 */
-    </style>
-</head>
-<body>
-    <div class="search-container">
-        <div class="selector">
-            <button class="model-btn active" id="openai-btn" data-model="openai">OpenAI</button>
-            <button class="model-btn" id="gemini-btn" data-model="gemini">Gemini</button>
-            <button class="model-btn" id="deepseek-btn" data-model="deepseek">DeepSeek</button>
-        </div>
-        <input type="text" id="search-input" placeholder="输入您的问题...">
-        <div class="loader" id="loader"></div>
-        <div id="output"></div>
-    </div>
-
-    <script>
-        // 配置不同模型的API信息 (实际应在后端配置)
-        const API_CONFIG = {
-            openai: {
-                endpoint: "https://api.openai.com/v1/chat/completions",
-                key: "sk-jvzEL8D1uW6WbJ33F7816d20D76d437d9958858eA97a57C0",
-                model: "gpt-3.5-turbo"
-            },
-            gemini: {
-                endpoint: "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
-                key: "AIzaSyDGWkxhScQnLyBCa-Dti1aYUjsPuhyzTpQ",
-                model: "gemini-pro"
-            },
-            deepseek: {
-                endpoint: "https://api.deepseek.com/v1/chat/completions",
-                key: "sk-2e031dc44c374b9f8dbe50eeda5de9b9",
-                model: "deepseek-chat"
-            }
-        };
-
-        let currentModel = 'openai';
-        const modelButtons = document.querySelectorAll('.model-btn');
-        
-        // 模型切换逻辑
-        modelButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                modelButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentModel = btn.dataset.model;
-            });
-        });
-
-        async function handleSearch(query) {
-            // ...省略加载状态等通用逻辑...
-            
-            try {
-                let result;
-                switch(currentModel) {
-                    case 'openai':
-                        result = await callOpenAI(query);
-                        break;
-                    case 'gemini':
-                        result = await callGemini(query);
-                        break;
-                    case 'deepseek':
-                        result = await callDeepSeek(query);
-                        break;
-                }
-                output.innerHTML = result;
-            } catch(error) {
-                // 统一错误处理
-                output.textContent = `错误：${error.message}`;
-            }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-
-        // OpenAI调用适配器
-        async function callOpenAI(query) {
-            const response = await fetch(API_CONFIG.openai.endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_CONFIG.openai.key}`
-                },
-                body: JSON.stringify({
-                    model: API_CONFIG.openai.model,
-                    messages: [{role: "user", content: query}]
-                })
-            });
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
-        // Gemini调用适配器
-        async function callGemini(query) {
-            const url = `${API_CONFIG.gemini.endpoint}?key=${API_CONFIG.gemini.key}`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{text: query}]
-                    }]
-                })
-            });
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        }
-
-        // DeepSeek调用适配器
-        async function callDeepSeek(query) {
-            const response = await fetch(API_CONFIG.deepseek.endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_CONFIG.deepseek.key}`
-                },
-                body: JSON.stringify({
-                    model: API_CONFIG.deepseek.model,
-                    messages: [{role: "user", content: query}]
-                })
-            });
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
-        // 共用的事件监听器和防抖逻辑与之前示例一致
-    </script>
-</body>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>多模型AI搜索+确认按钮</title>
-    <style>
-        /* 新增搜索按钮样式 */
         .search-box {
-            display: flex;
-            gap: 10px;
-            margin: 1rem 0;
+            padding: 8px 15px;
+            border: 1px solid #a5d6a7;
+            border-radius: 20px;
+            width: 300px;
         }
-
-        #search-input {
-            flex: 1;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            background-color: #81c784;
+            color: white;
             padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
+            text-align: left;
         }
-
-        #search-btn {
-            padding: 12px 24px;
-            background: #2563eb;
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #c8e6c9;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f8e9;
+        }
+        tr:hover {
+            background-color: #dcedc8;
+        }
+        .rank {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .category {
+            background-color: #c8e6c9;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            background-color: #81c784;
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.3s;
         }
-
-        #search-btn:hover {
-            background: #1d4ed8;
+        .pagination button:hover {
+            background-color: #66bb6a;
         }
-
-        #search-btn:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-        }
-
-        /* 其他保持原有样式不变 */
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <div class="selector">
-            <button class="model-btn active" data-model="openai">OpenAI</button>
-            <button class="model-btn" data-model="gemini">Gemini</button>
-            <button class="model-btn" data-model="deepseek">DeepSeek</button>
+    <div class="container">
+        <h1>全球热门网站排名</h1>
+        
+        <div class="header">
+            <div>
+                <span>更新日期: 2023年11月</span>
+            </div>
+            <input type="text" class="search-box" placeholder="搜索网站...">
         </div>
         
-        <!-- 新增搜索按钮容器 -->
-        <div class="search-box">
-            <input 
-                type="text" 
-                id="search-input" 
-                placeholder="输入您的问题..."
-                autocomplete="off"
-            >
-            <button id="search-btn" onclick="handleSearch()">搜索</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>网站</th>
+                    <th>类别</th>
+                    <th>月访问量</th>
+                    <th>国家/地区</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rank">1</td>
+                    <td>google.com</td>
+                    <td><span class="category">搜索引擎</span></td>
+                    <td>86.7B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">2</td>
+                    <td>youtube.com</td>
+                    <td><span class="category">视频分享</span></td>
+                    <td>34.6B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">3</td>
+                    <td>facebook.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>24.5B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">4</td>
+                    <td>twitter.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>21.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">5</td>
+                    <td>instagram.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>19.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">6</td>
+                    <td>baidu.com</td>
+                    <td><span class="category">搜索引擎</span></td>
+                    <td>17.3B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">7</td>
+                    <td>wikipedia.org</td>
+                    <td><span class="category">百科全书</span></td>
+                    <td>15.9B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">8</td>
+                    <td>yahoo.com</td>
+                    <td><span class="category">门户网站</span></td>
+                    <td>14.7B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">9</td>
+                    <td>amazon.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>13.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">10</td>
+                    <td>linkedin.com</td>
+                    <td><span class="category">职业社交</span></td>
+                    <td>12.4B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">11</td>
+                    <td>reddit.com</td>
+                    <td><span class="category">社交新闻</span></td>
+                    <td>11.9B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">12</td>
+                    <td>zoom.us</td>
+                    <td><span class="category">视频会议</span></td>
+                    <td>11.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">13</td>
+                    <td>qq.com</td>
+                    <td><span class="category">门户网站</span></td>
+                    <td>10.8B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">14</td>
+                    <td>taobao.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>10.5B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">15</td>
+                    <td>tmall.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>10.3B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">16</td>
+                    <td>microsoft.com</td>
+                    <td><span class="category">科技</span></td>
+                    <td>9.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">17</td>
+                    <td>apple.com</td>
+                    <td><span class="category">科技</span></td>
+                    <td>9.5B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">18</td>
+                    <td>netflix.com</td>
+                    <td><span class="category">流媒体</span></td>
+                    <td>9.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">19</td>
+                    <td>office.com</td>
+                    <td><span class="category">生产力工具</span></td>
+                    <td>8.9B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">20</td>
+                    <td>bing.com</td>
+                    <td><span class="category">搜索引擎</span></td>
+                    <td>8.7B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">21</td>
+                    <td>pinterest.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>8.4B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">22</td>
+                    <td>whatsapp.com</td>
+                    <td><span class="category">通讯</span></td>
+                    <td>8.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">23</td>
+                    <td>tiktok.com</td>
+                    <td><span class="category">短视频</span></td>
+                    <td>8.0B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">24</td>
+                    <td>jd.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>7.8B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">25</td>
+                    <td>weibo.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>7.6B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">26</td>
+                    <td>ebay.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>7.4B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">27</td>
+                    <td>twitch.tv</td>
+                    <td><span class="category">直播</span></td>
+                    <td>7.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">28</td>
+                    <td>aliexpress.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>7.0B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">29</td>
+                    <td>paypal.com</td>
+                    <td><span class="category">支付</span></td>
+                    <td>6.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">30</td>
+                    <td>microsoftonline.com</td>
+                    <td><span class="category">生产力工具</span></td>
+                    <td>6.6B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">31</td>
+                    <td>sohu.com</td>
+                    <td><span class="category">门户网站</span></td>
+                    <td>6.4B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">32</td>
+                    <td>dropbox.com</td>
+                    <td><span class="category">云存储</span></td>
+                    <td>6.2B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">33</td>
+                    <td>sina.com.cn</td>
+                    <td><span class="category">门户网站</span></td>
+                    <td>6.0B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">34</td>
+                    <td>vk.com</td>
+                    <td><span class="category">社交网络</span></td>
+                    <td>5.8B</td>
+                    <td>俄罗斯</td>
+                </tr>
+                <tr>
+                    <td class="rank">35</td>
+                    <td>spotify.com</td>
+                    <td><span class="category">音乐流媒体</span></td>
+                    <td>5.6B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">36</td>
+                    <td>naver.com</td>
+                    <td><span class="category">门户网站</span></td>
+                    <td>5.4B</td>
+                    <td>韩国</td>
+                </tr>
+                <tr>
+                    <td class="rank">37</td>
+                    <td>csdn.net</td>
+                    <td><span class="category">技术社区</span></td>
+                    <td>5.2B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">38</td>
+                    <td>stackoverflow.com</td>
+                    <td><span class="category">技术问答</span></td>
+                    <td>5.0B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">39</td>
+                    <td>github.com</td>
+                    <td><span class="category">代码托管</span></td>
+                    <td>4.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">40</td>
+                    <td>adobe.com</td>
+                    <td><span class="category">软件</span></td>
+                    <td>4.6B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">41</td>
+                    <td>zhihu.com</td>
+                    <td><span class="category">问答社区</span></td>
+                    <td>4.4B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">42</td>
+                    <td>alipay.com</td>
+                    <td><span class="category">支付</span></td>
+                    <td>4.2B</td>
+                    <td>中国</td>
+                </tr>
+                <tr>
+                    <td class="rank">43</td>
+                    <td>quora.com</td>
+                    <td><span class="category">问答社区</span></td>
+                    <td>4.0B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">44</td>
+                    <td>medium.com</td>
+                    <td><span class="category">博客平台</span></td>
+                    <td>3.8B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">45</td>
+                    <td>imdb.com</td>
+                    <td><span class="category">电影数据库</span></td>
+                    <td>3.6B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">46</td>
+                    <td>wordpress.com</td>
+                    <td><span class="category">博客平台</span></td>
+                    <td>3.4B</td>
+                    <td>全球</td>
+                </tr>
+                <tr>
+                    <td class="rank">47</td>
+                    <td>cnn.com</td>
+                    <td><span class="category">新闻</span></td>
+                    <td>3.2B</td>
+                    <td>美国</td>
+                </tr>
+                <tr>
+                    <td class="rank">48</td>
+                    <td>bbc.com</td>
+                    <td><span class="category">新闻</span></td>
+                    <td>3.0B</td>
+                    <td>英国</td>
+                </tr>
+                <tr>
+                    <td class="rank">49</td>
+                    <td>nytimes.com</td>
+                    <td><span class="category">新闻</span></td>
+                    <td>2.8B</td>
+                    <td>美国</td>
+                </tr>
+                <tr>
+                    <td class="rank">50</td>
+                    <td>walmart.com</td>
+                    <td><span class="category">电子商务</span></td>
+                    <td>2.6B</td>
+                    <td>美国</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="pagination">
+            <button>上一页</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>下一页</button>
         </div>
-
-        <div class="loader" id="loader"></div>
-        <div id="output"></div>
     </div>
-
-    <script>
-        // 新增防抖版搜索逻辑
-        const searchBtn = document.getElementById('search-btn');
-        let isSearching = false;
-
-        // 点击按钮触发搜索
-        async function handleSearch() {
-            if (isSearching) return;
-            
-            const query = document.getElementById('search-input').value.trim();
-            if (!query) {
-                alert('请输入有效内容');
-                return;
-            }
-
-            isSearching = true;
-            searchBtn.disabled = true;
-            loader.style.display = 'block';
-            output.textContent = '';
-
-            try {
-                let result;
-                switch(currentModel) {
-                    case 'openai':
-                        result = await callOpenAI(query);
-                        break;
-                    case 'gemini':
-                        result = await callGemini(query);
-                        break;
-                    case 'deepseek':
-                        result = await callDeepSeek(query);
-                        break;
-                }
-                output.innerHTML = result;
-            } catch(error) {
-                output.textContent = `错误：${error.message}`;
-            } finally {
-                isSearching = false;
-                searchBtn.disabled = false;
-                loader.style.display = 'none';
-            }
-        }
-
-        // 新增回车键支持
-        document.getElementById('search-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !isSearching) {
-                handleSearch();
-            }
-        });
-    </script>
 </body>
-</html>
-
 </html>
